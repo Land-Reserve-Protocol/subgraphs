@@ -1,6 +1,95 @@
-type ExampleEntity @entity {
-  id: Bytes!
-  count: BigInt!
-  zone: Bytes! # address
-  name: String! # string
+enum OrderType {
+    BUY
+    SELL
+}
+
+enum OrderStatus {
+    PENDING
+    FULFILLED
+    CANCELLED
+}
+
+enum AssetType {
+    Residential
+    Commercial
+    Industrial
+    Agricultural
+}
+
+type Zone @entity {
+    id: ID!
+    name: String! @index
+    symbol: String! @index
+    latitude: BigDecimal! @index
+    longitude: BigDecimal! @index
+}
+
+type NFT @entity {
+    id: ID!
+    zone: Zone!
+    metadataURI: String!
+    shareAsset: ShareAsset @derivedFrom(field: "asset")
+}
+
+type ShareAsset @entity {
+    id: ID!
+    asset: NFT! @unique
+    name: String!
+    symbol: String!
+    peggedAsset: String!
+    currentTradeIndex: BigInt!
+    assetType: AssetType!
+}
+
+type Order @entity {
+    id: ID!
+    orderType: OrderType!
+    status: OrderStatus!
+    volume: BigDecimal!
+    shareAsset: ShareAsset!
+    unitAmount: BigDecimal!
+    creator: Bytes!
+}
+
+type Statistics @entity {
+    id: ID!
+    buyCount: BigInt!
+    sellCount: BigInt!
+    totalTradeAmount: BigDecimal!
+    totalBuyAmount: BigDecimal!
+    totalSellAmount: BigDecimal!
+    regionsCount: BigInt!
+    assetsCount: BigInt!
+}
+
+type HourlyData @entity {
+    id: ID!
+    totalBuyAmount: BigDecimal!
+    totalSellAmount: BigDecimal!
+    timestampInMilliseconds: BigInt!
+}
+
+type DailyData @entity {
+    id: ID!
+    totalBuyAmount: BigDecimal!
+    totalSellAmount: BigDecimal!
+    timestampInMilliseconds: BigInt!
+}
+
+type ShareAssetHourlyData @entity {
+    id: ID!
+    price: BigDecimal!
+    totalBuyAmount: BigDecimal!
+    totalSellAmount: BigDecimal!
+    timestampInMilliseconds: BigInt!
+    shareAsset: ShareAsset!
+}
+
+type ShareAssetDailyData @entity {
+    id: ID!
+    price: BigDecimal!
+    totalBuyAmount: BigDecimal!
+    totalSellAmount: BigDecimal!
+    timestampInMilliseconds: BigInt!
+    shareAsset: ShareAsset!
 }
