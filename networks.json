@@ -1,7 +1,7 @@
 {
-  "fluentTestnet": {
-    "Actions": {
-      "address": "0xbae397084452981Ba33F6797c25e576dFe1F44a9"
+    "fluentTestnet": {
+        "Actions": {
+            "address": "0xbae397084452981Ba33F6797c25e576dFe1F44a9"
+        }
     }
-  }
 }

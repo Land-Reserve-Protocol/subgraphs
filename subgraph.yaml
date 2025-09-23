@@ -1,31 +1,48 @@
 specVersion: 1.0.0
 indexerHints:
-  prune: auto
+    prune: auto
 schema:
-  file: ./schema.graphql
+    file: ./schema.graphql
 dataSources:
-  - kind: ethereum
-    name: Actions
-    network: fluentTestnet
-    source:
-      address: "0xbae397084452981Ba33F6797c25e576dFe1F44a9"
-      abi: Actions
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - NewZone
-        - Paused
-        - Unpaused
-      abis:
-        - name: Actions
-          file: ./abis/Actions.json
-      eventHandlers:
-        - event: NewZone(indexed address,indexed string,indexed string,uint64,uint64)
-          handler: handleNewZone
-        - event: Paused(address)
-          handler: handlePaused
-        - event: Unpaused(address)
-          handler: handleUnpaused
-      file: ./src/actions.ts
+    - kind: ethereum
+      name: Actions
+      network: fluentTestnet
+      source:
+          address: '0xbae397084452981Ba33F6797c25e576dFe1F44a9'
+          abi: Actions
+      mapping:
+          kind: ethereum/events
+          apiVersion: 0.0.7
+          language: wasm/assemblyscript
+          entities:
+              - Zone
+          abis:
+              - name: Actions
+                file: ./abis/Actions.json
+          eventHandlers:
+              - event: NewZone(indexed address,indexed string,indexed string,uint64,uint64)
+                handler: handleNewZone
+          file: ./src/handlers/base/actions.ts
+templates:
+    - kind: ethereum
+      name: Zone
+      network: fluentTestnet
+      source:
+          abi: Zone
+      mapping:
+          kind: ethereum/events
+          apiVersion: 0.0.7
+          language: wasm/assemblyscript
+          entities:
+              - Zone
+          abis:
+              - name: Zone
+                file: ./abis/Zone.json
+              - name: LRShare
+                file: ./abis/LRShare.json
+          eventHandlers:
+              - event: Mint(indexed uint256,indexed address,string)
+                handler: handleMint
+              - event: Transfer(indexed address,indexed address,indexed uint256)
+                handler: handleTransfer
+          file: ./src/handlers/core/zone.ts

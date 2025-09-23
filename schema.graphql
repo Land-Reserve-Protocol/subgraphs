@@ -33,7 +33,7 @@ type NFT @entity {
 
 type ShareAsset @entity {
     id: ID!
-    asset: NFT! @unique
+    asset: NFT!
     name: String!
     symbol: String!
     peggedAsset: String!
