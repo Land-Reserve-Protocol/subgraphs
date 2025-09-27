@@ -1,88 +1,88 @@
 specVersion: 1.0.0
 indexerHints:
-    prune: auto
+  prune: auto
 schema:
-    file: ./schema.graphql
+  file: ./schema.graphql
 dataSources:
-    - kind: ethereum
-      name: Actions
-      network: fluentTestnet
-      source:
-          address: '0xbae397084452981Ba33F6797c25e576dFe1F44a9'
-          abi: Actions
-      mapping:
-          kind: ethereum/events
-          apiVersion: 0.0.7
-          language: wasm/assemblyscript
-          entities:
-              - Zone
-          abis:
-              - name: Actions
-                file: ./abis/Actions.json
-          eventHandlers:
-              - event: NewZone(indexed address,indexed string,indexed string,uint64,uint64)
-                handler: handleNewZone
-          file: ./src/handlers/base/actions.ts
-    - kind: ethereum
-      name: Marketplace
-      network: fluentTestnet
-      source:
-          address: '0x39eEB5f0e205f77DF97e30eea537A72140a85B95'
-          abi: Marketplace
-          startBlock: 6301142
-      mapping:
-          kind: ethereum/events
-          apiVersion: 0.0.7
-          language: wasm/assemblyscript
-          entities:
-              - Order
-          abis:
-              - name: Marketplace
-                file: ./abis/Marketplace.json
-          eventHandlers:
-              - event: OrderCreated(indexed address,indexed uint8,uint64,indexed address,uint256)
-                handler: handleOrderCreated
-          file: ./src/handlers/base/marketplace.ts
+  - kind: ethereum
+    name: Actions
+    network: fluent-testnet
+    source:
+      abi: Actions
+      address: "0xbae397084452981Ba33F6797c25e576dFe1F44a9"
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Zone
+      abis:
+        - name: Actions
+          file: ./abis/Actions.json
+      eventHandlers:
+        - event: NewZone(indexed address,indexed string,indexed string,uint64,uint64)
+          handler: handleNewZone
+      file: ./src/handlers/base/actions.ts
+  - kind: ethereum
+    name: Marketplace
+    network: fluent-testnet
+    source:
+      abi: Marketplace
+      address: "0x39eEB5f0e205f77DF97e30eea537A72140a85B95"
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Order
+      abis:
+        - name: Marketplace
+          file: ./abis/Marketplace.json
+      eventHandlers:
+        - event: OrderCreated(indexed address,indexed uint8,uint64,indexed
+            address,uint256)
+          handler: handleOrderCreated
+      file: ./src/handlers/base/marketplace.ts
 templates:
-    - kind: ethereum
-      name: Zone
-      network: fluentTestnet
-      source:
-          abi: Zone
-      mapping:
-          kind: ethereum/events
-          apiVersion: 0.0.7
-          language: wasm/assemblyscript
-          entities:
-              - Zone
-          abis:
-              - name: Zone
-                file: ./abis/Zone.json
-              - name: LRShare
-                file: ./abis/LRShare.json
-          eventHandlers:
-              - event: Mint(indexed uint256,indexed address,string)
-                handler: handleMint
-              - event: Transfer(indexed address,indexed address,indexed uint256)
-                handler: handleTransfer
-          file: ./src/handlers/core/zone.ts
-    - kind: ethereum
-      name: Order
-      network: fluentTestnet
-      source:
-          abi: Order
-      mapping:
-          kind: ethereum/events
-          apiVersion: 0.0.7
-          language: wasm/assemblyscript
-          entities:
-              - Order
-          abis:
-              - name: Order
-                file: ./abis/Order.json
-          eventHandlers:
-              - event: Fulfilled(indexed uint256)
-                handler: handleFulfillment
-              - event: Cancelled(indexed uint256)
-                handler: handleCancellation
-          file: ./src/handlers/core/order.ts
+  - kind: ethereum
+    name: Zone
+    network: fluent-testnet
+    source:
+      abi: Zone
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Zone
+      abis:
+        - name: Zone
+          file: ./abis/Zone.json
+        - name: LRShare
+          file: ./abis/LRShare.json
+      eventHandlers:
+        - event: Mint(indexed uint256,indexed address,string)
+          handler: handleMint
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/handlers/core/zone.ts
+  - kind: ethereum
+    name: Order
+    network: fluent-testnet
+    source:
+      abi: Order
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Order
+      abis:
+        - name: Order
+          file: ./abis/Order.json
+      eventHandlers:
+        - event: Fulfilled(indexed uint256)
+          handler: handleFulfillment
+        - event: Cancelled(indexed uint256)
+          handler: handleCancellation
+      file: ./src/handlers/core/order.ts
