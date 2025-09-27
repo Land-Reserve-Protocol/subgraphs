@@ -12,3 +12,5 @@ export const BI_TWO = BigInt.fromI64(2);
 export const BD_ZERO = BigDecimal.fromString('0');
 export const BD_ONE = BigDecimal.fromString('1');
 export const BD_TWO = BigDecimal.fromString('2');
+
+export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
