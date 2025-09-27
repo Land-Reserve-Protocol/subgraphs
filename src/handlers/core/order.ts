@@ -11,15 +11,16 @@ export function handleFulfillment(event: FulfilledEvent): void {
 
     // Update statistics
     const stats = Statistics.load(GENERIC_ENTITY_ID) as Statistics;
+    const value = order.unitAmount.times(order.volume);
 
     if (order.orderType === 'BUY') {
         stats.buyCount = stats.buyCount.plus(BI_ONE);
-        stats.totalBuyAmount = stats.totalBuyAmount.plus(order.unitAmount.times(order.volume));
+        stats.totalBuyAmount = stats.totalBuyAmount.plus(value);
     }
 
     if (order.orderType === 'SELL') {
         stats.sellCount = stats.sellCount.plus(BI_ONE);
-        stats.totalSellAmount = stats.totalSellAmount.plus(order.unitAmount.times(order.volume));
+        stats.totalSellAmount = stats.totalSellAmount.plus(value);
     }
 
     stats.totalTradeAmount = stats.totalSellAmount.plus(stats.totalBuyAmount);
