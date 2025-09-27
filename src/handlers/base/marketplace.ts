@@ -10,14 +10,14 @@ export function handleOrderCreated(event: OrderCreatedEvent): void {
     // Share contract
     const shareContract = LRShare.bind(shareAsset);
     // Pegged asset decimals
-    const decimals = shareContract.peggedAssetDecimals();
+    const decimals = shareContract.peggedAssetDecimals() as u8;
     // Create new order
     const order = new Order(orderId);
     order.creator = event.transaction.from;
     order.shareAsset = shareAsset.toHex();
     order.status = 'PENDING';
     order.unitAmount = normalizeByExp(event.params.unitAmount, decimals);
-    order.orderType = deriveOrderType(event.params.orderType);
+    order.orderType = deriveOrderType(event.params.orderType as u32);
     order.volume = normalizeByBNNU(event.params.volume);
 
     order.save();

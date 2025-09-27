@@ -8,8 +8,8 @@ export function normalizeByBNNU(num: BigInt): BigDecimal {
     return numBD.div(bnnuBD);
 }
 
-export function normalizeByExp(num: BigInt, exp: u8 | BigInt = BigInt.fromI64(18)): BigDecimal {
-    if (typeof exp !== 'number') exp = parseInt(exp.toHex(), 16) as u8;
+export function normalizeByExp(num: BigInt, exp: u8): BigDecimal {
+    // if (typeof exp !== 'number') exp = parseInt(exp.toHex(), 16) as u8;
     // Convert to BigDecimal
     const numBD = num.toBigDecimal();
     const pow = BigInt.fromI64(10).pow(exp);
@@ -28,7 +28,7 @@ export function deriveAssetType(cmd: BigInt): string {
     return assetType;
 }
 
-export function deriveOrderType(typ: number): string {
+export function deriveOrderType(typ: u32): string {
     switch (typ) {
         case 0:
             return 'BUY';
