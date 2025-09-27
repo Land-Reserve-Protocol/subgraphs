@@ -29,11 +29,12 @@ type NFT @entity {
     zone: Zone!
     metadataURI: String!
     shareAsset: ShareAsset @derivedFrom(field: "asset")
+    isActive: Boolean!
 }
 
 type ShareAsset @entity {
     id: ID!
-    asset: NFT! @unique
+    asset: NFT!
     name: String!
     symbol: String!
     peggedAsset: String!
@@ -49,6 +50,7 @@ type Order @entity {
     shareAsset: ShareAsset!
     unitAmount: BigDecimal!
     creator: Bytes!
+    conclusionTimestamp: BigInt
 }
 
 type Statistics @entity {
