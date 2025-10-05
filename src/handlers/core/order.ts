@@ -1,6 +1,6 @@
 import { Order, Statistics } from '../../../generated/schema';
 import { Fulfilled as FulfilledEvent, Cancelled as CancelledEvent } from '../../../generated/templates/Order/Order';
-import { BI_ONE, GENERIC_ENTITY_ID } from '../../constants';
+import { BI_ONE, FULFILLED_ORDERS, GENERIC_ENTITY_ID } from '../../constants';
 
 export function handleFulfillment(event: FulfilledEvent): void {
     const orderId = event.address.toHex();
@@ -8,6 +8,9 @@ export function handleFulfillment(event: FulfilledEvent): void {
     order.status = 'FULFILLED';
     order.conclusionTimestamp = event.params.timestamp;
     order.save();
+
+    // Save in fulfilled orders array
+    FULFILLED_ORDERS.push(order);
 
     // Update statistics
     const stats = Statistics.load(GENERIC_ENTITY_ID) as Statistics;

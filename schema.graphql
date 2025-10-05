@@ -68,14 +68,14 @@ type HourlyData @entity {
     id: ID!
     totalBuyAmount: BigDecimal!
     totalSellAmount: BigDecimal!
-    timestampInMilliseconds: BigInt!
+    timestampInMilliseconds: Int!
 }
 
 type DailyData @entity {
     id: ID!
     totalBuyAmount: BigDecimal!
     totalSellAmount: BigDecimal!
-    timestampInMilliseconds: BigInt!
+    timestampInMilliseconds: Int!
 }
 
 type ShareAssetHourlyData @entity {
@@ -83,7 +83,7 @@ type ShareAssetHourlyData @entity {
     price: BigDecimal!
     totalBuyAmount: BigDecimal!
     totalSellAmount: BigDecimal!
-    timestampInMilliseconds: BigInt!
+    timestampInMilliseconds: Int!
     shareAsset: ShareAsset!
 }
 
@@ -92,6 +92,6 @@ type ShareAssetDailyData @entity {
     price: BigDecimal!
     totalBuyAmount: BigDecimal!
     totalSellAmount: BigDecimal!
-    timestampInMilliseconds: BigInt!
+    timestampInMilliseconds: Int!
     shareAsset: ShareAsset!
 }

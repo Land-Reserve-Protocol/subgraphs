@@ -22,6 +22,8 @@ dataSources:
       eventHandlers:
         - event: NewZone(indexed address,indexed string,indexed string,uint64,uint64)
           handler: handleNewZone
+      blockHandlers:
+        - handler: handleBlockChange
       file: ./src/handlers/base/actions.ts
   - kind: ethereum
     name: Marketplace
