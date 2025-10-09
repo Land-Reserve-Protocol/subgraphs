@@ -1,9 +1,11 @@
+import { ByteArray, ethereum } from '@graphprotocol/graph-ts';
 import { NewZone as NewZoneEvent } from '../../../generated/Actions/Actions';
 import { Statistics, Zone } from '../../../generated/schema';
 import { Zone as ZoneTemplate } from '../../../generated/templates';
 
 import { BD_ZERO, BI_ONE, BI_ZERO, GENERIC_ENTITY_ID } from '../../constants';
 import { normalizeByBNNU } from '../../utils';
+import { updateDailyData, updateHourlyData, updateShareAssetsDailyData, updateShareAssetsHourlyData } from '../misc';
 
 export function handleNewZone(event: NewZoneEvent): void {
     const zoneId = event.params.zone.toHex();
@@ -11,8 +13,8 @@ export function handleNewZone(event: NewZoneEvent): void {
     const zone = new Zone(zoneId);
     zone.latitude = normalizeByBNNU(event.params.lat);
     zone.longitude = normalizeByBNNU(event.params.lng);
-    zone.symbol = event.params.symbol.toString();
-    zone.name = event.params.name.toString();
+    zone.symbol = ByteArray.fromHexString(event.params.symbol.toHex()).toString();
+    zone.name = ByteArray.fromHexString(event.params.name.toHex()).toString();
 
     zone.save();
 
@@ -34,4 +36,11 @@ export function handleNewZone(event: NewZoneEvent): void {
     stats.save();
 
     ZoneTemplate.create(event.params.zone);
+}
+
+export function handleBlockChange(block: ethereum.Block): void {
+    updateHourlyData(block);
+    updateDailyData(block);
+    updateShareAssetsHourlyData(block);
+    updateShareAssetsDailyData(block);
 }
