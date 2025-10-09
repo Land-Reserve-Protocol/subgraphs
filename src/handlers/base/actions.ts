@@ -14,7 +14,7 @@ export function handleNewZone(event: NewZoneEvent): void {
     zone.latitude = normalizeByBNNU(event.params.lat);
     zone.longitude = normalizeByBNNU(event.params.lng);
     zone.symbol = ByteArray.fromHexString(event.params.symbol.toHex()).toString();
-    zone.name = ByteArray.fromHexString(event.params.name.toHex()).toHexString();
+    zone.name = ByteArray.fromHexString(event.params.name.toHex()).toString();
 
     zone.save();
 

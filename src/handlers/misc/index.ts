@@ -1,4 +1,4 @@
-import { Address, BigDecimal, ethereum } from '@graphprotocol/graph-ts';
+import { Address, BigDecimal, BigInt, ethereum } from '@graphprotocol/graph-ts';
 import { BD_ZERO, BI_ONE, FULFILLED_ORDERS, GENERIC_ENTITY_ID, ONE_DAY, ONE_HOUR } from '../../constants';
 import {
     DailyData,
@@ -21,7 +21,7 @@ export function updateHourlyData(block: ethereum.Block): HourlyData | null {
     let hourlyData = HourlyData.load(hourId.toString());
     if (hourlyData === null) {
         hourlyData = new HourlyData(hourId.toString());
-        hourlyData.timestampInMilliseconds = (hourTimestamp * 1000) as i32;
+        hourlyData.timestampInMilliseconds = BigInt.fromI32((hourTimestamp * 1000) as i32);
     }
 
     hourlyData.totalBuyAmount = statistics.totalBuyAmount;
@@ -41,7 +41,7 @@ export function updateDailyData(block: ethereum.Block): DailyData | null {
     let dailyData = DailyData.load(dayId.toString());
     if (dailyData === null) {
         dailyData = new DailyData(dayId.toString());
-        dailyData.timestampInMilliseconds = (dayTimestamp * 1000) as i32;
+        dailyData.timestampInMilliseconds = BigInt.fromI32((dayTimestamp * 1000) as i32);
     }
 
     dailyData.totalBuyAmount = statistics.totalBuyAmount;
@@ -82,7 +82,7 @@ export function updateShareAssetsHourlyData(block: ethereum.Block): string[] {
         if (shareAssetHourlyData === null) {
             shareAssetHourlyData = new ShareAssetHourlyData(itemId);
             shareAssetHourlyData.shareAsset = shareId;
-            shareAssetHourlyData.timestampInMilliseconds = (hourTimestamp * 1000) as i32;
+            shareAssetHourlyData.timestampInMilliseconds = BigInt.fromI32((hourTimestamp * 1000) as i32);
         }
         shareAssetHourlyData.totalBuyAmount = totalBuys.get(shareId);
         shareAssetHourlyData.totalSellAmount = totalSells.get(shareId);
@@ -130,7 +130,7 @@ export function updateShareAssetsDailyData(block: ethereum.Block): string[] {
         if (shareAssetDailyData === null) {
             shareAssetDailyData = new ShareAssetDailyData(itemId);
             shareAssetDailyData.shareAsset = shareId;
-            shareAssetDailyData.timestampInMilliseconds = (dayTimestamp * 1000) as i32;
+            shareAssetDailyData.timestampInMilliseconds = BigInt.fromI32((dayTimestamp * 1000) as i32);
         }
         shareAssetDailyData.totalBuyAmount = totalBuys.get(shareId);
         shareAssetDailyData.totalSellAmount = totalSells.get(shareId);

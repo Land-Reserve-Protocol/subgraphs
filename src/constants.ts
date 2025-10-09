@@ -21,4 +21,4 @@ export const ONE_DAY = 86400;
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
 
 // Useful data stores
-export const FULFILLED_ORDERS: Array<Order> = [];
+export const FULFILLED_ORDERS: Array<Order> = new Array();
