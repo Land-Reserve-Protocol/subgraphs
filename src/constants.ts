@@ -15,8 +15,8 @@ export const BD_ONE = BigDecimal.fromString('1');
 export const BD_TWO = BigDecimal.fromString('2');
 
 // Temporal
-export const ONE_HOUR = 3600;
-export const ONE_DAY = 86400;
+export const ONE_HOUR = BigInt.fromI64(3600);
+export const ONE_DAY = BigInt.fromI64(86400);
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
 
