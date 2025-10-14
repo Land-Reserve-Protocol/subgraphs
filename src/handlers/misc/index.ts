@@ -11,9 +11,9 @@ import { LRShare } from '../../../generated/templates/Zone/LRShare';
 import { normalizeByExp } from '../../utils';
 
 export function updateHourlyData(block: ethereum.Block): HourlyData | null {
-    const timestamp = block.timestamp.toI32();
-    const hourId = Math.floor(timestamp / ONE_HOUR);
-    const hourTimestamp = hourId * ONE_HOUR;
+    const timestamp = block.timestamp;
+    const hourId = timestamp.div(ONE_HOUR);
+    const hourTimestamp = hourId.times(ONE_HOUR);
     const statistics = Statistics.load(GENERIC_ENTITY_ID);
 
     if (statistics === null) return null;
@@ -21,7 +21,7 @@ export function updateHourlyData(block: ethereum.Block): HourlyData | null {
     let hourlyData = HourlyData.load(hourId.toString());
     if (hourlyData === null) {
         hourlyData = new HourlyData(hourId.toString());
-        hourlyData.timestampInMilliseconds = BigInt.fromI32((hourTimestamp * 1000) as i32);
+        hourlyData.timestampInMilliseconds = hourTimestamp.times(BigInt.fromI32(1000));
     }
 
     hourlyData.totalBuyAmount = statistics.totalBuyAmount;
@@ -31,9 +31,9 @@ export function updateHourlyData(block: ethereum.Block): HourlyData | null {
 }
 
 export function updateDailyData(block: ethereum.Block): DailyData | null {
-    const timestamp = block.timestamp.toI32();
-    const dayId = Math.floor(timestamp / ONE_DAY);
-    const dayTimestamp = dayId * ONE_DAY;
+    const timestamp = block.timestamp;
+    const dayId = timestamp.div(ONE_DAY);
+    const dayTimestamp = dayId.times(ONE_DAY);
     const statistics = Statistics.load(GENERIC_ENTITY_ID);
 
     if (statistics === null) return null;
@@ -41,7 +41,7 @@ export function updateDailyData(block: ethereum.Block): DailyData | null {
     let dailyData = DailyData.load(dayId.toString());
     if (dailyData === null) {
         dailyData = new DailyData(dayId.toString());
-        dailyData.timestampInMilliseconds = BigInt.fromI32((dayTimestamp * 1000) as i32);
+        dailyData.timestampInMilliseconds = dayTimestamp.times(BigInt.fromI32(1000));
     }
 
     dailyData.totalBuyAmount = statistics.totalBuyAmount;
@@ -51,9 +51,9 @@ export function updateDailyData(block: ethereum.Block): DailyData | null {
 }
 
 export function updateShareAssetsHourlyData(block: ethereum.Block): string[] {
-    const timestamp = block.timestamp.toI32();
-    const hourId = Math.floor(timestamp / ONE_HOUR);
-    const hourTimestamp = hourId * ONE_HOUR;
+    const timestamp = block.timestamp;
+    const hourId = timestamp.div(ONE_HOUR);
+    const hourTimestamp = hourId.times(ONE_HOUR);
     const tracked: Set<string> = new Set();
     const totalBuys: Map<string, BigDecimal> = new Map();
     const totalSells: Map<string, BigDecimal> = new Map();
@@ -82,7 +82,7 @@ export function updateShareAssetsHourlyData(block: ethereum.Block): string[] {
         if (shareAssetHourlyData === null) {
             shareAssetHourlyData = new ShareAssetHourlyData(itemId);
             shareAssetHourlyData.shareAsset = shareId;
-            shareAssetHourlyData.timestampInMilliseconds = BigInt.fromI32((hourTimestamp * 1000) as i32);
+            shareAssetHourlyData.timestampInMilliseconds = hourTimestamp.times(BigInt.fromI32(1000));
         }
         shareAssetHourlyData.totalBuyAmount = totalBuys.get(shareId);
         shareAssetHourlyData.totalSellAmount = totalSells.get(shareId);
@@ -99,9 +99,9 @@ export function updateShareAssetsHourlyData(block: ethereum.Block): string[] {
 }
 
 export function updateShareAssetsDailyData(block: ethereum.Block): string[] {
-    const timestamp = block.timestamp.toI32();
-    const dayId = Math.floor(timestamp / ONE_DAY);
-    const dayTimestamp = dayId * ONE_DAY;
+    const timestamp = block.timestamp;
+    const dayId = timestamp.div(ONE_DAY);
+    const dayTimestamp = dayId.times(ONE_DAY);
     const tracked: Set<string> = new Set();
     const totalBuys: Map<string, BigDecimal> = new Map();
     const totalSells: Map<string, BigDecimal> = new Map();
@@ -130,7 +130,7 @@ export function updateShareAssetsDailyData(block: ethereum.Block): string[] {
         if (shareAssetDailyData === null) {
             shareAssetDailyData = new ShareAssetDailyData(itemId);
             shareAssetDailyData.shareAsset = shareId;
-            shareAssetDailyData.timestampInMilliseconds = BigInt.fromI32((dayTimestamp * 1000) as i32);
+            shareAssetDailyData.timestampInMilliseconds = dayTimestamp.times(BigInt.fromI32(1000));
         }
         shareAssetDailyData.totalBuyAmount = totalBuys.get(shareId);
         shareAssetDailyData.totalSellAmount = totalSells.get(shareId);
