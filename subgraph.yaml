@@ -10,6 +10,7 @@ dataSources:
     source:
       abi: Actions
       address: "0xbae397084452981Ba33F6797c25e576dFe1F44a9"
+      startBlock: 6301146
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -31,6 +32,7 @@ dataSources:
     source:
       abi: Marketplace
       address: "0x39eEB5f0e205f77DF97e30eea537A72140a85B95"
+      startBlock: 6301142
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
